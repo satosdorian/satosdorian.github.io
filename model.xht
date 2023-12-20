@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>2. Enhance Your Domain Model</title>
+<link href="../Styles/book_local.css" rel="stylesheet" type="text/css"/>
+<link href="../Styles/bookshelf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="sbo-rt-content"><h1 class="chapter-title" id="chp.enhance-your-domain-model"><span class="chapter-number">
+            Chapter
+            2</span><br/><span class="chapter-name">Enhance Your Domain Model</span></h1>
+<p id="d24e792">In the prior chapter, we covered the basics of domain modeling and the basics of how to create a domain model with Mermaid. There’s much more to learn though, particularly in how we can enhance the domain model with more rich information.</p>
+<p id="d24e794">In this chapter, you’ll learn how to show inheritance in order to show subtypes and how to provide more information to anyone viewing the diagram with descriptions and something called multiplicity. </p>
+<p id="d24e796">The folks at Streamy are eager to get their product to market, so let’s dive right in and complete their domain model!</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e798">Define Inheritance</h2>
+<p id="d24e801">Besides association, aggregation, and composition from the last chapter, we have a way to show inheritence within our domain model.</p>
+<p id="d24e803"><span class="cf ic">Title</span> is an abstract term deliberately—after all Streamy wants to offer a range of video content to its prospective customers. To start off with, we want to offer <span class="cf ic">TV Show</span>, <span class="cf ic">Film</span>, and <span class="cf ic">Short</span>. In object-oriented programming, these might be represented as subclasses of <span class="cf ic">Title</span>.</p>
+<p id="d24e819">We can reflect that within UML using a generalization. </p>
+<p id="d24e821">Let’s add that to our existing Mermaid code:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">classDiagram</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title -- Genre</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title *-- Season</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title *-- Review</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title o-- Actor</td>
+</tr>
+</tbody>
+</table>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">TV Show --|&gt; Title</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">Short --|&gt; Title</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">Film --|&gt; Title</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">Season *-- Episode</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e847">Generalizations are defined using <span class="cf ic">--|&gt;</span>, and will be represented on the rendered diagram as an arrow. If you’re familiar with UML, they’re typically shown as empty arrows, but in Mermaid they’re solid arrows.</p>
+<div class="ss"><img alt="images/documenting-your-domain/generalisations.png" class="" height="585" id="d24e853" src="../Images/generalisations.png" style="width: 65%" width="585"/></div>
+<p id="d24e854">Generalizations are probably the simplest of associations as they are more familiar and easily recognizable to anyone who’s worked with inheritance in programming, and they behave in exactly the same way. Another example might be the entities <span class="cf ic">Dog</span> and <span class="cf ic">Cat</span>, which have the generalization <span class="cf ic">Animal</span>.</p>
+<p id="d24e865">You may have noticed TV Show has had its space removed, which is a quirk of using a class diagram for a domain model, as class names in code never contain spaces. Hopefully in the future spaces are supported, but for now I think it’s not major and the important information is still conveyed well.</p>
+<p id="d24e867">As we’ve now added a number of entities and relationships to our domain model, let’s take a closer look at what Mermaid does for us in terms of rendering.</p>
+<h3 id="mermaid-powerful-rendering">Mermaid’s Powerful Rendering</h3>
+<p id="d24e873">It’s possible, and very common, for diagrams to become complex—especially domain models. If you’ve ever had to create any form of diagram manually, you’ll know the pain of adding in a new box and drawing the arrows. If you haven’t, consider yourself lucky! It can be painstakingly slow to create diagrams by hand, and when you’re taking part in domain modeling, it’s likely the model will evolve rapidly. All of a sudden, you might have a need to insert an entity right in the middle. With a manually drawn diagram, this would be a nightmare, especially while screen sharing!</p>
+<p id="d24e875">However, with Mermaid this is all handled for you by the library. Do you need to insert an entity right in the middle? Simply add it, and Mermaid will instantly re-render the diagram in the most readable way possible.</p>
+<p id="d24e877">We’re going to extend the relationship for <span class="cf ic">Review</span>, as realistically a <span class="cf ic">Review</span> can be left for a <span class="cf ic">Title</span>, <span class="cf ic">Season</span> or <span class="cf ic">Episode</span>.</p>
+<p id="d24e894">Here are all our entities represented on the domain model:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">classDiagram</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title -- Genre</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title *-- Season</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title *-- Review</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title o-- Actor</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    TV Show --|&gt; Title</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Short --|&gt; Title</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Film --|&gt; Title</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Season *-- Review</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Season *-- Episode</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Episode *-- Review</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e924">Now comment out each <span class="cf ic">Review</span> relation (from bottom to top) in the Mermaid code and generate the diagram after adding each one, and note how Mermaid reshuffles the diagram to make it as readable as possible. Comments in Mermaid are made using <span class="cf ic">%%</span> at the start of the line (for example, <span class="cf ic">%% Episode *-- Review</span>).</p>
+<p id="d24e938">This is one of the huge benefits of Mermaid versus more manual tools—it allows for rapid iteration over a domain model. You could feasibly completely rewrite the model in a short amount of time without tediously redrawing numerous arrows and labels. This is especially useful for domain modeling, where you may want to try out ideas visually when discussing the domain model with colleagues and quickly change tact if needed.</p>
+<p id="d24e940">Hopefully you can now see how powerful Mermaid is, especially over manual tools that put you in charge of the layout. We can now begin to enrich the domain model with more information, starting with adding descriptions to relationships.</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e942">Describe Relationships</h2>
+<p id="d24e945">One of the key features of a domain model written with UML is that you can, and should, describe how the entities interact with regard to their relationships. In a lot of cases, and in the case of our domain model we have so far, a lot of the descriptions can be simply described as <span class="cf ic">has</span>. Be as descriptive as possible, and try to avoid using <span class="cf ic">has</span> for everything where possible.</p>
+<p id="d24e953">More detailed descriptions for relationships come into play when the actors are added to a model (for example, customers or viewers). I’ve added descriptions to each relationship and updated the Mermaid code:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">classDiagram</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title -- Genre: is associated with</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title *-- Season: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title *-- Review: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title o-- Actor: features</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    TV Show --|&gt; Title: implements</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Short --|&gt; Title: implements</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Film --|&gt; Title: implements</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Viewer --&gt; Title: watches</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Season *-- Review: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Season *-- Episode: contains</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Episode *-- Review: has</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e986">I added in a <span class="cf ic">Viewer</span> entity that watches <span class="cf ic">Title</span>s to demonstrate a more descriptive label, which also shows how to add directional association using <span class="cf ic">--&gt;</span> instead of simply two hyphens (which demonstrated bidirectional association, as we saw earlier with <span class="cf ic">Genre</span> and <span class="cf ic">Title</span>). This means <span class="cf ic">Viewer</span> holds a reference to <span class="cf ic">Title</span>, but <span class="cf ic">Title</span> doesn’t hold a reference to <span class="cf ic">Viewer</span>. This makes a lot of sense, as a <span class="cf ic">Viewer</span> can naturally watch <span class="cf ic">Title</span>s, but the same cannot be said in reverse—unlike <span class="cf ic">Genre</span> and <span class="cf ic">Title</span>, where they can both reasonably hold references to one another.</p>
+<p id="d24e1029">For descriptions that are bidirectional, such as <span class="cf ic">Title</span> and <span class="cf ic">Genre</span>, we must describe it in a way that it works for both. In our example, a <span class="cf ic">Title</span> is associated with a <span class="cf ic">Genre</span> (and vice versa).</p>
+<p id="d24e1043">Lastly, for the generalizations, I’ve chosen to describe them using implements. All this is doing is making clear that <span class="cf ic">Title</span> is a generalization, and it has specializations such as <span class="cf ic">Film</span> and <span class="cf ic">Short</span>. It has strong links to inheritance in programming, so implements or extends are both fine. The only reason I include anything at all is to convey to those not familiar with the diagram’s arrows that this is an inheritance relationship, where <span class="cf ic">Title</span> has different types.</p>
+<p id="d24e1060">For all the other relationships, the description is written from the parent’s point of view (for example, <span class="cf ic">Season</span> contains <span class="cf ic">Episodes</span>).</p>
+<p id="d24e1068">Mermaid is intuitive, so adding descriptions to relationships is achieved by simply adding a colon to the end of the line you want to describe and then writing your description.</p>
+<p id="d24e1070">Once generated, it looks like this:</p>
+<div class="ss"><img alt="images/documenting-your-domain/describe-relationships.png" class="" height="720" id="d24e1073" src="../Images/describe-relationships.png" style="width: 60%" width="490"/></div>
+<p id="d24e1074">Anyone reading the domain model now understands how two entities relate to each other thanks to the descriptions we just added. But how do you know the number of entities that can relate to one another? For example, is there one <span class="cf ic">A</span> related to <span class="cf ic">B</span>, or are there many? We’ll cover this next by taking a look in detail at what’s called multiplicity.</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e1082">Add Multiplicity</h2>
+<p id="d24e1085">Our domain model is almost complete, with just a couple of final touches to go. We’ve added our entities, linked them via relationships, and described the way in which they are related. However, one thing we’re missing is how many of one type of entity relates to another. This is called <span class="emph">multiplicity</span>, and it sounds complicated, but you’ll soon see it’s not. You’ve likely encountered using language like this before, especially if you’ve worked with relational databases.</p>
+<p id="d24e1090">You may have noticed that when we write our entities, they’re always written in the singular form. This is again a nod to the fact that our code, which will use singular names in class names, should reflect our domain model. Furthermore, it might be possible, such as the case of <span class="cf ic">Title</span> and <span class="cf ic">Season</span>, that some <span class="cf ic">Titles</span> might contain a single <span class="cf ic">Season</span>, but others might contain multiple <span class="cf ic">Season</span>s.</p>
+<p id="d24e1107">If we always named the entities as plural to account for these cases, it would be easy for readers of the diagram to misunderstand and assume there are always multiple, even if that’s not the case.</p>
+<p id="d24e1109">Luckily, we can define what’s called multiplicity on our domain model. A fancy term, but in essence it allows you to define whether the relationships are one-to-one, one-to-many, none-to-many, many-to-many, and everything in between (for example, more unusual ones such as two-to-three).</p>
+<p id="d24e1111">Let’s add multiplicity to our Mermaid code:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">classDiagram</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title "1..*" -- "1..*" Genre: is associated with</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title "1" *-- "0..*" Season: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title "1" *-- "0..*" Review: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Title "0..*" o--  "1..*" Actor: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    TV Show --|&gt; Title: implements</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Short --|&gt; Title: implements</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Film --|&gt; Title: implements</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Viewer "0..*" --&gt; "0..*" Title: watches</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Season "1" *-- "0..*" Review: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Season "1" *-- "1..*" Episode: has</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline"></td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">    Episode "1" *-- "0..*" Review: has</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e1145">Once rendered, it looks like the diagram <a href="#fig.ep1">shown</a>.</p>
+<div id="fig.ep1"><div><img alt="images/documenting-your-domain/multiplicity.png" class="" height="780" id="d24e1151" src="../Images/multiplicity.png" style="width: 65%" width="531"/></div>
+</div>
+<table class="simpletable outerlines"><thead><tr><th class="outerlines" colspan="2"><p class="last-para-in-cell">Multiplicity Rendering in Safari</p>
+</th>
+</tr>
+</thead>
+<tbody><tr class="tr zebra"><td style="valign: middle; width: 12%; ">
+<img alt="images/aside-icons/warning.png" class="" height="271" id="d24e1162" src="../Images/warning.png" style="width: 100%" width="260"/>
+</td>
+<td style="valign: middle; width: 88%; ">
+
+At the time of writing, a bug in Safari on MacOS prevents the multiplicity to render. There’s an open issue being looked at, but for now, I recommend using a different browser for creating Mermaid diagrams if you’re using mermaid.live.
+</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e1167">To define multiplicity on each relationship, we can optionally put them either side of the relationship identifier (for example, <span class="cf ic">--</span> in the first line). I initially found the way these are defined a little odd, as they feel like they’re on the wrong side when reading. Collectively they’re known as multiplicity, and within a relationship’s multiplicity each side is known as a single entity’s <span class="emph">cardinality</span>.</p>
+<p id="d24e1175">To explain what I mean, let’s look at <span class="cf ic">Title</span> and <span class="cf ic">Season</span>. Its line looks like so:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">Title "1" *-- "0..*" Season: has</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e1187">If we translate this into English, it would read as follows:</p>
+<ul><li><span class="cf ic">Title</span> has zero to many <span class="cf ic">Season</span>s.</li>
+<li><span class="cf ic">Season</span> belongs to one <span class="cf ic">Title</span>.</li>
+</ul>
+<p id="d24e1206">However, if you were reading it from left to right as the code shows it, you would <span class="emph">probably</span> read it as “<span class="cf ic">Title</span> has 1 <span class="cf ic">Season</span>,” as that’s the first cardinality you get to. An entity’s cardinality is defined on the opposite side of the relationship, which can be confusing to begin with.</p>
+<p id="d24e1219">To help remember how cardinality is defined, particularly when I am looking at past diagrams, I find it helps to mentally “skip” the first cardinality you get to. So in the example of <span class="cf ic">Title</span> and <span class="cf ic">Season</span>, when reading <span class="cf ic">Title</span>’s cardinality, you ignore the 1 and read the rest (<span class="cf ic">Title</span> has 0 to many <span class="cf ic">Season</span>s). The ordering is slightly off as the label is at the end, but it’s the best way I’ve found of quickly understanding at a glance. This works whether you’re reading from left to right or right to left.</p>
+<p id="d24e1236">You might be wondering why I chose 0-to-many and not 1-to-many for <span class="cf ic">Season</span>s—it was simply because it’s possible to have a title without any seasons yet (for example, it just has a trailer, with a coming soon notice for the seasons).</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e1242">Add a Title</h2>
+<p id="d24e1245">One of the first tips I picked up when learning how to diagram was to always add a title to your diagram. It bleeds over from charts, I imagine, where a chart without a title can often be misinterpreted.</p>
+<p id="d24e1247">Luckily, Mermaid added title support for all diagrams as of version 9.3.0. For me, this was a much-needed feature, and I’m incredibly grateful it’s been added.</p>
+<p id="d24e1249">We can add a title to any Mermaid diagram simply by adding the following block of code to the top of the markup. It must go at the very top, even above the diagram type definition. As we’re currently working with a class diagram, the top of our diagram markup would look like this:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">---</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">title: Streamy Domain Model</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">---</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">classDiagram</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="mermaid-improve-readability">Improve Readability</h2>
+<p id="d24e1264">As we covered earlier in <a href="../Text/02.xhtml#mermaid-powerful-rendering">​<em>Mermaid’s Powerful Rendering</em>​</a>, Mermaid is deciding how to render the diagram, but it doesn’t always get it perfect. The rendering is being improved with each version, and in the case of class diagrams, a new renderer is currently being worked on.</p>
+<p id="d24e1268">For the moment, however, we don’t have too much control over the layout. You can change the order of statements in your Mermaid code to potentially alter the display of each node, but in some cases this won’t work, as Mermaid under the covers has a particular method for rendering diagrams.</p>
+<p id="d24e1270">In the case of our diagram, a lot is linked to <span class="cf ic">Title</span>. It would benefit from being a little larger, and we can control the style via CSS, but this is only supported if you render the diagrams yourself on your own website—something that you won’t often be doing. Work is planned to allow styling from within the markup itself for class diagrams, at which point having more control over the rendering will be possible.</p>
+<p id="d24e1276">For now, though, we can make a box a little bigger height-wise by adding the following anywhere after the first time <span class="cf ic">Title</span> is used:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">%% Added to improve readability</td>
+</tr>
+<tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">Title: \n\n</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e1287">Essentially, because we’re using a class diagram, there will be two small empty boxes below the title, which in a class diagram would be populated with its properties and methods (you’ll be learning about those in Chapter 8, <a href="../Text/08.xhtml#chp.visualise-code-flows">​<em>Visualize Code Flows</em>​</a>). Those fields are irrelevant in a domain model, so we don’t fill them in, but we can make use of their space using a new line, which helps space out the lines a bit, as shown in the <a href="#fig.ep2">diagram</a>.</p>
+<div id="fig.ep2"><div><img alt="images/documenting-your-domain/improve-readability.png" class="" height="780" id="d24e1295" src="../Images/improve-readability.png" style="width: 65%" width="490"/></div>
+</div>
+<p id="d24e1296">It’s certainly not perfect, but ultimately we’re sacrificing some style points for a maintainable, updatable diagram—a reasonable trade-off.</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e1298">Enrich Nodes with Links</h2>
+<p id="d24e1301">Our domain model is now finished, but I want to show you one more bit of Mermaid magic: how to link your nodes to web pages.</p>
+<p id="d24e1303">Each node in the diagram can have a link related to it that makes it clickable. This can be useful to link to documentation on that entity if it sits separately to the diagram, as an example.</p>
+<p id="d24e1305">Nodes can have links added to them by using the following:</p>
+<table class="processedcode"><tbody><tr><td class="codeinfo">​<span class="codeprefix">&#160;</span></td>
+<td class="codeline">link Title "http://www.example.com" _blank</td>
+</tr>
+</tbody>
+</table>
+<p id="d24e1311"><span class="cf ic">link</span> tells Mermaid we want to create the link, <span class="cf ic">Title</span> is the identifier of the node, followed by the URL, and, finally, the setting for how the link is opened (for example, same window or a new window).</p>
+<p id="d24e1318">It’s possible to call custom JavaScript code using a similar syntax, but it will become apparent when you get to <a href="../Text/10.xhtml#render-mermaid-markdown">​<em>Render Mermaid Within Markdown Files</em>​</a>, why we aren’t going to be using that.</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e1323">Enhance Your Domain Model</h2>
+<p id="d24e1326">In the last chapter, we created the core of our domain model, which should have contained the majority of the entities. For this chapter, we’ll continue working on that domain model and add the following:</p>
+<ul><li>
+<p id="d24e1330">If applicable to your domain, add some generalizations to show inheritance. Even if it’s not perfect for your domain, try adding it in briefly so you get the syntax down.</p></li>
+<li>
+<p id="d24e1333">Add descriptions to all the relationships.</p></li>
+<li>
+<p id="d24e1336">Define multiplicity for all the relationships.</p></li>
+<li>
+<p id="d24e1339">Have a go at adjusting the size of some of the nodes, using what you learned in <a href="../Text/02.xhtml#mermaid-improve-readability">​<em>Improve Readability</em>​</a>.</p></li>
+<li>
+<p id="d24e1344">Create a link to an external page (it can be any page) and try clicking it.</p></li>
+</ul>
+<p id="d24e1346">Once you’ve completed all the points, you’ve created an entire domain model, with all the bells and whistles!</p>
+</div>
+
+
+<div id="sbo-rt-content"><h2 id="d24e1348">What You’ve Learned</h2>
+<p id="d24e1351">Excellent work so far—creating an entire domain model is no mean feat. Let’s recap what you’ve learned in this chapter:</p>
+<p id="d24e1353">Domain modeling is the primary way of determining the important aspects of a business, and domain-driven design is the methodology used to bring that domain model to life in your day-to-day work. We start by identifying the core entities within our domain. We can keep modeling our domain until all the key entities are represented in our domain model.</p>
+<p id="d24e1355">For each entity, we add a node to our UML class diagram and define the relationships between them. Relationships should be defined between the entities and can be of types assocation, composite, aggregate, or generalization. Finally, we can define the multiplicity (one-to-one, one-to-many, and so on) between the entities.</p>
+<p id="d24e1358">Now that we have our domain model defined, we can start thinking about the interactions between different services and how we model those. In the next chapter, you’ll learn how to understand and visualize the flows within your applications.</p>
+<div class="copyright">Copyright © 2023, The Pragmatic Bookshelf.</div>
+</div>
+</body>
+</html>
